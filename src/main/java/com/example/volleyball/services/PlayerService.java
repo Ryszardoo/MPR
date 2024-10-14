@@ -1,30 +1,45 @@
 package com.example.volleyball.services;
 
 import com.example.volleyball.models.Player;
+import com.example.volleyball.repositories.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class PlayerService
 {
-    public Player getPlayerById(int id)
+    private final PlayerRepository playerRepository;
+
+    public Player getPlayer(UUID id)
     {
-        return new Player(id, "Bartek", "Kurek");
+        return playerRepository.getReferenceById(id);
+    }
+
+    public List<Player> getAllPlayers()
+    {
+        return playerRepository.findAll();
     }
 
     public Player addPlayer(Player player)
     {
-        return new Player(player.getId(), "Bartek", "Kurek");
+        return playerRepository.save(new Player());
     }
 
-    public Player deletePlayer(Player player)
+    public void deletePlayer(UUID id)
     {
-        return player;
+        playerRepository.deleteById(id);
     }
 
-    public Player editPlayer(Player player)
+    public Player editPlayer(UUID id, Player editedPlayer)
     {
-        return player;
+        Player player = playerRepository.getReferenceById(id);
+        player.setName(editedPlayer.getName());
+        player.setSurname(editedPlayer.getSurname());
+        return playerRepository.save(player);
+
     }
 }

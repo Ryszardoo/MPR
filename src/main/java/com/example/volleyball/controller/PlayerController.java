@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,29 +15,32 @@ public class PlayerController
 {
     private final PlayerService service;
 
+    @GetMapping("/getPlayer/{id}")
+    public Player getPlayer(@PathVariable UUID id){
+        return service.getPlayer(id);
+    }
+
     @GetMapping("/getAllPlayers/{id}")
-    public List<Player> getAllPlayers(@PathVariable int id)
+    public List<Player> getAllPlayers()
     {
-        return List.of(service.getPlayerById(id));
+        return (service.getAllPlayers());
     }
 
     @PostMapping("/addPlayer")
     public Player addPlayer(@RequestBody Player player)
     {
-        return player;
+        return service.addPlayer(player);
     }
 
     @DeleteMapping("/deletePlayer")
-    public Player deletePlayer(@RequestBody Player player)
+    public void deletePlayer(@RequestBody UUID id)
     {
-        System.out.println("Usunieto profil gracza: " + player);
-        return player;
+        service.deletePlayer(id);
     }
 
     @PutMapping
-    public Player editPlayer(@RequestBody Player player)
+    public Player editPlayer(@PathVariable UUID id, @RequestBody Player player)
     {
-        System.out.println("Edytowane profil gracza: " + player);
-        return player;
+        return service.editPlayer(id, player);
     }
 }
