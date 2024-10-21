@@ -17,7 +17,8 @@ public class PlayerController
 
     @GetMapping("/getPlayer/{id}")
     public Player getPlayer(@PathVariable UUID id){
-        return service.getPlayer(id);
+        //return service.getPlayer(id);
+        return new Player();
     }
 
     @GetMapping("/getAllPlayers/{id}")
@@ -43,4 +44,11 @@ public class PlayerController
     {
         return service.editPlayer(id, player);
     }
+
+    @GetMapping("/filter/{gender}/{role}")
+    public List<Integer> filterPlayers(@PathVariable String gender, @PathVariable String role)
+    {
+        return service.filterPlayers(gender, role);
+    }
+
 }

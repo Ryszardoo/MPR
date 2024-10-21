@@ -26,7 +26,7 @@ public class PlayerService
 
     public Player addPlayer(Player player)
     {
-        return playerRepository.save(new Player());
+        return playerRepository.save(player);
     }
 
     public void deletePlayer(UUID id)
@@ -39,7 +39,22 @@ public class PlayerService
         Player player = playerRepository.getReferenceById(id);
         player.setName(editedPlayer.getName());
         player.setSurname(editedPlayer.getSurname());
+        player.setAge(editedPlayer.getAge());
+        player.setHeight(editedPlayer.getHeight());
+        player.setRole(editedPlayer.getRole());
+        player.setGender(editedPlayer.getGender());
         return playerRepository.save(player);
 
+    }
+
+    public List<Integer> filterPlayers(String gender, String role)
+    {
+        return playerRepository
+                .findAll()
+                .stream()
+                .filter(ourPlayer -> ourPlayer.getGender().equalsIgnoreCase(gender))
+                .filter(ourPlayer -> ourPlayer.getRole().equals(role))
+                .map(Player::getHeight)
+                .toList();
     }
 }
