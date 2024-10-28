@@ -1,11 +1,15 @@
 package com.example.volleyball.models;
 
 import jakarta.persistence.Id;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
+@Setter
+@Getter
 public class PlayerRequest
 {
 //    @NonNull
@@ -14,7 +18,7 @@ public class PlayerRequest
 //    private UUID id;
 
     @NonNull
-    private String name;
+    private String playerName;
     @NonNull
     private String surname;
 

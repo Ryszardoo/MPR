@@ -1,6 +1,7 @@
 package com.example.volleyball.controller;
 
 import com.example.volleyball.models.Player;
+import com.example.volleyball.models.PlayerResponse;
 import com.example.volleyball.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,8 @@ public class PlayerController
     private final PlayerService service;
 
     @GetMapping("/getPlayer/{id}")
-    public Player getPlayer(@PathVariable UUID id){
+    public Player getPlayer(@PathVariable UUID id)
+    {
         //return service.getPlayer(id);
         return new Player();
     }
@@ -28,7 +30,7 @@ public class PlayerController
     }
 
     @PostMapping("/addPlayer")
-    public Player addPlayer(@RequestBody Player player)
+    public PlayerResponse addPlayer(@RequestBody Player player)
     {
         return service.addPlayer(player);
     }
@@ -40,7 +42,7 @@ public class PlayerController
     }
 
     @PutMapping
-    public Player editPlayer(@PathVariable UUID id, @RequestBody Player player)
+    public PlayerResponse editPlayer(@PathVariable UUID id, @RequestBody Player player)
     {
         return service.editPlayer(id, player);
     }

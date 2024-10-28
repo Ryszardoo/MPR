@@ -1,6 +1,7 @@
 package com.example.volleyball.services;
 
 import com.example.volleyball.models.Player;
+import com.example.volleyball.models.PlayerResponse;
 import com.example.volleyball.repositories.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,11 @@ public class PlayerService
         return playerRepository.findAll();
     }
 
-    public Player addPlayer(Player player)
+    public PlayerResponse addPlayer(Player player)
     {
-        return playerRepository.save(player);
+        convertPlayerToResponse(player);
+        Player savedPlayer = playerRepository.save(player);
+        return convertPlayerToResponse(savedPlayer);
     }
 
     public void deletePlayer(UUID id)
@@ -34,8 +37,9 @@ public class PlayerService
         playerRepository.deleteById(id);
     }
 
-    public Player editPlayer(UUID id, Player editedPlayer)
+    public PlayerResponse editPlayer(UUID id, Player editedPlayer)
     {
+        convertPlayerToResponse(editedPlayer);
         Player player = playerRepository.getReferenceById(id);
         player.setName(editedPlayer.getName());
         player.setSurname(editedPlayer.getSurname());
@@ -43,8 +47,24 @@ public class PlayerService
         player.setHeight(editedPlayer.getHeight());
         player.setRole(editedPlayer.getRole());
         player.setGender(editedPlayer.getGender());
-        return playerRepository.save(player);
+        Player save = playerRepository.save(player);
+        return convertPlayerToResponse(save);
 
+    }
+
+    /*
+
+     */
+
+    public PlayerResponse convertPlayerToResponse(Player player)
+    {
+        PlayerResponse playerResponse = new PlayerResponse();
+        playerResponse.setName(player.getName());
+        playerResponse.setRole(player.getRole());
+        playerResponse.setAge(player.getAge());
+        playerResponse.setHeight(player.getHeight());
+        playerResponse.setGender(player.getGender());
+        return playerResponse;
     }
 
     public List<Integer> filterPlayers(String gender, String role)
@@ -57,4 +77,6 @@ public class PlayerService
                 .map(Player::getHeight)
                 .toList();
     }
+
+
 }
