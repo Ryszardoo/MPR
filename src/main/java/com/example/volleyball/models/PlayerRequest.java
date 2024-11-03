@@ -12,10 +12,10 @@ import java.util.UUID;
 @Getter
 public class PlayerRequest
 {
-//    @NonNull
-//    @Id
-//    @UuidGenerator
-//    private UUID id;
+    @NonNull
+    @Id
+    @UuidGenerator
+    private UUID id;
 
     @NonNull
     private String playerName;

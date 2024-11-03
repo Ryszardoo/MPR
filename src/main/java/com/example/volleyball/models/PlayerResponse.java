@@ -22,6 +22,8 @@ public class PlayerResponse
 
     @NonNull
     private String name;
+    @NonNull
+    private String surname;
     private int age;
     private int height;
     private String role;
